@@ -21,6 +21,9 @@
         'top-right' => 'top-4 right-4',
         default => 'bottom-14 left-4',
     };
+
+    //translations
+    $translate = static fn (?string $value, array $replace = []): string => blank($value) ? '' : __($value, $replace);
 @endphp
 
 <div
@@ -42,7 +45,7 @@
         x-transition:enter-end="opacity-100 scale-100"
         class="fixed {{ $positionClasses }} z-40 flex h-10 w-10 items-center justify-center rounded-full shadow-lg transition hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
         style="background: var(--primary-400); --tw-ring-color: var(--primary-400); color: white;"
-        title="What's New"
+        title="{{ __('filament-feature-showcase::messages.button.title') }}"
     >
         <x-filament::icon icon="heroicon-m-sparkles" class="h-5 w-5" />
         @if($hasUnseen)
@@ -85,10 +88,15 @@
                      style="background: linear-gradient(135deg, var(--primary-400), var(--primary-600));">
                     <div class="relative z-10">
                         <div class="mb-1 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
-                            Version {{ $currentVersion }}
+                            {{ __('filament-feature-showcase::messages.header.version', ['version' => $currentVersion]) }}
                         </div>
-                        <h2 class="text-2xl font-bold">What's New</h2>
-                        <p class="mt-1 text-sm text-white/80">See what's changed across all versions</p>
+                        <h2 class="text-2xl font-bold">
+                            {{ __('filament-feature-showcase::messages.header.title') }}
+                        </h2>
+
+                        <p class="mt-1 text-sm text-white/80">
+                            {{ __('filament-feature-showcase::messages.header.description') }}
+                        </p>
                     </div>
                     {{-- Decorative circles --}}
                     <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10"></div>
@@ -110,11 +118,11 @@
                                           style="{{ $version === $currentVersion ? 'background: color-mix(in oklch, var(--primary-400) 15%, white); color: var(--primary-600);' : 'background: rgb(243 244 246); color: rgb(107 114 128);' }}">
                                         v{{ $version }}
                                         @if($version === $currentVersion)
-                                            <span class="ml-1 text-[10px] opacity-70">latest</span>
+                                            {{ __('filament-feature-showcase::messages.version.latest') }}
                                         @endif
                                     </span>
                                     <span class="text-sm font-medium text-gray-900 dark:text-white">
-                                        {{ $entry['title'] ?? "Version {$version}" }}
+                                        {{ $translate($entry['title'] ?? 'filament-feature-showcase::messages.version.fallback_title', ['version' => $version]) }}
                                     </span>
                                 </div>
                                 <x-filament::icon
@@ -130,7 +138,7 @@
                                 x-collapse
                             >
                                 @if(!empty($entry['description']))
-                                    <p class="px-3 pb-3 text-xs text-gray-500 dark:text-gray-400">{{ $entry['description'] }}</p>
+                                    <p class="px-3 pb-3 text-xs text-gray-500 dark:text-gray-400">{{ $translate($entry['description'] ?? null) }}</p>
                                 @endif
                                 <div class="grid grid-cols-1 gap-3 px-3 pb-4 sm:grid-cols-2">
                                     @foreach($entry['features'] ?? [] as $feature)
@@ -147,11 +155,11 @@
                                                     </div>
                                                 @endif
                                                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-                                                    {{ $feature['title'] }}
+                                                    {{ $translate($feature['title'] ?? null) }}
                                                 </h3>
                                             </div>
                                             <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-                                                {{ $feature['description'] }}
+                                                {{ $translate($feature['description'] ?? null) }}
                                             </p>
                                         </div>
                                     @endforeach
@@ -181,7 +189,7 @@
                             onmouseover="this.style.background='var(--primary-500)'"
                             onmouseout="this.style.background='var(--primary-400)'"
                         >
-                            Got it, let's go!
+                            {{ __('filament-feature-showcase::messages.actions.dismiss') }}
                             <x-filament::icon icon="heroicon-m-arrow-right" class="h-4 w-4" />
                         </button>
                     @else
@@ -192,7 +200,7 @@
                             onmouseover="this.style.background='var(--primary-500)'"
                             onmouseout="this.style.background='var(--primary-400)'"
                         >
-                            Close
+                            {{ __('filament-feature-showcase::messages.actions.close') }}
                             <x-filament::icon icon="heroicon-m-x-mark" class="h-4 w-4" />
                         </button>
                     @endif
