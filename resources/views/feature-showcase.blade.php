@@ -42,7 +42,7 @@
         x-transition:enter-end="opacity-100 scale-100"
         class="fixed {{ $positionClasses }} z-40 flex h-10 w-10 items-center justify-center rounded-full shadow-lg transition hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
         style="background: var(--primary-400); --tw-ring-color: var(--primary-400); color: white;"
-        title="What's New"
+        title="{{ __("What's New") }}"
     >
         <x-filament::icon icon="heroicon-m-sparkles" class="h-5 w-5" />
         @if($hasUnseen)
@@ -87,8 +87,8 @@
                         <div class="mb-1 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
                             Version {{ $currentVersion }}
                         </div>
-                        <h2 class="text-2xl font-bold">What's New</h2>
-                        <p class="mt-1 text-sm text-white/80">See what's changed across all versions</p>
+                        <h2 class="text-2xl font-bold">{{ __("What's New") }}</h2>
+                        <p class="mt-1 text-sm text-white/80">{{ __("See what's changed across all versions") }}</p>
                     </div>
                     {{-- Decorative circles --}}
                     <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10"></div>
@@ -110,11 +110,11 @@
                                           style="{{ $version === $currentVersion ? 'background: color-mix(in oklch, var(--primary-400) 15%, white); color: var(--primary-600);' : 'background: rgb(243 244 246); color: rgb(107 114 128);' }}">
                                         v{{ $version }}
                                         @if($version === $currentVersion)
-                                            <span class="ml-1 text-[10px] opacity-70">latest</span>
+                                            <span class="ml-1 text-[10px] opacity-70">{{ __('latest') }}</span>
                                         @endif
                                     </span>
                                     <span class="text-sm font-medium text-gray-900 dark:text-white">
-                                        {{ $entry['title'] ?? "Version {$version}" }}
+                                        {{ __($entry['title'] ?? "Version {$version}") }}
                                     </span>
                                 </div>
                                 <x-filament::icon
@@ -130,7 +130,7 @@
                                 x-collapse
                             >
                                 @if(!empty($entry['description']))
-                                    <p class="px-3 pb-3 text-xs text-gray-500 dark:text-gray-400">{{ $entry['description'] }}</p>
+                                    <p class="px-3 pb-3 text-xs text-gray-500 dark:text-gray-400">{{ __($entry['description']) }}</p>
                                 @endif
                                 <div class="grid grid-cols-1 gap-3 px-3 pb-4 sm:grid-cols-2">
                                     @foreach($entry['features'] ?? [] as $feature)
@@ -147,11 +147,11 @@
                                                     </div>
                                                 @endif
                                                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-                                                    {{ $feature['title'] }}
+                                                    {{ __($feature['title']) }}
                                                 </h3>
                                             </div>
                                             <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-                                                {{ $feature['description'] }}
+                                                {{ __($feature['description']) }}
                                             </p>
                                         </div>
                                     @endforeach
@@ -181,7 +181,7 @@
                             onmouseover="this.style.background='var(--primary-500)'"
                             onmouseout="this.style.background='var(--primary-400)'"
                         >
-                            Got it, let's go!
+                            {{ __("Got it, let's go!") }}
                             <x-filament::icon icon="heroicon-m-arrow-right" class="h-4 w-4" />
                         </button>
                     @else
@@ -192,7 +192,7 @@
                             onmouseover="this.style.background='var(--primary-500)'"
                             onmouseout="this.style.background='var(--primary-400)'"
                         >
-                            Close
+                            {{ __('Close') }}
                             <x-filament::icon icon="heroicon-m-x-mark" class="h-4 w-4" />
                         </button>
                     @endif
