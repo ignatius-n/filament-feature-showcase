@@ -17,6 +17,7 @@ class FeatureShowcaseServiceProvider extends PackageServiceProvider
             ->name(static::$name)
             ->hasConfigFile()
             ->hasViews()
+            ->hasTranslations()
             ->hasRoute('web');
     }
 }

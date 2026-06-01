@@ -130,6 +130,91 @@ FeatureShowcasePlugin::make()
     ->buttonPosition('bottom-left') // Button position: bottom-left, bottom-right, top-left, top-right
 ```
 
+## Translations
+
+The package UI strings are translatable using Laravel's localization system.
+
+You may publish the translation files with:
+
+```bash
+php artisan vendor:publish --tag=filament-feature-showcase-translations
+```
+
+This will publish the package language files so you can customize labels such as the modal title, version badge, action buttons, and helper text.
+
+For example, after publishing the translations, you may edit the Spanish file:
+
+```text
+lang/vendor/filament-feature-showcase/es/messages.php
+```
+
+Depending on your Laravel version, the file may also be published under:
+
+```text
+resources/lang/vendor/filament-feature-showcase/es/messages.php
+```
+
+### Translating changelog entries
+
+Changelog values are also passed through Laravel's `__()` helper when rendered.
+
+This means you can keep using plain strings:
+
+```php
+'changelog' => [
+    '1.2.0' => [
+        'title' => 'Dark Mode Support',
+        'description' => 'Full dark mode support across the platform.',
+        'features' => [
+            [
+                'icon' => 'heroicon-o-moon',
+                'title' => 'Dark Mode',
+                'description' => 'Toggle between light and dark themes.',
+            ],
+        ],
+    ],
+],
+```
+
+Or you can use translation keys:
+
+```php
+'changelog' => [
+    '1.2.0' => [
+        'title' => 'changelog.versions.1_2_0.title',
+        'description' => 'changelog.versions.1_2_0.description',
+        'features' => [
+            [
+                'icon' => 'heroicon-o-moon',
+                'title' => 'changelog.versions.1_2_0.features.dark_mode.title',
+                'description' => 'changelog.versions.1_2_0.features.dark_mode.description',
+            ],
+        ],
+    ],
+],
+```
+
+Then define those translations in your application, for example:
+
+```php
+// lang/es/changelog.php
+
+return [
+    'versions' => [
+        '1_2_0' => [
+            'title' => 'Compatibilidad con modo oscuro',
+            'description' => 'Compatibilidad completa con modo oscuro en toda la plataforma.',
+            'features' => [
+                'dark_mode' => [
+                    'title' => 'Modo oscuro',
+                    'description' => 'Alterna entre temas claros y oscuros.',
+                ],
+            ],
+        ],
+    ],
+];
+```
+
 ## How It Works
 
 1. When a user logs in, the plugin checks their `last_seen_version` preference against `config('filament-feature-showcase.current')`
